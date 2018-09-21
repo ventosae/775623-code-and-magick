@@ -51,7 +51,7 @@ var getColumnColor = function (ctx, names) {
 var renderHistogram = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     var columnX = CLOUD_X + HORIZONTAL_POSITION + (COLUMN_GAP + COLUMN_WIDTH) * i;
-    var columnY = CLOUD_y + CLOUD_HEIGHT - VERTICAL_POSITION;
+    var columnY = CLOUD_Y + CLOUD_HEIGHT - VERTICAL_POSITION;
     var columnHeight = (Math.round(times[i]) * HISTOGRAM_HEIGHT) / getMaxElement(times);
     ctx.fillStyle = getColumnColor(ctx, names[i]);
     ctx.fillRect(columnX, columnY, COLUMN_WIDTH, -columnHeight);
