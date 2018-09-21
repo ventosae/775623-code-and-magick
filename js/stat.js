@@ -39,30 +39,25 @@ var writeMessage = function (ctx, message, color, font, x, y) {
   ctx.fillText(message, CLOUD_X + x, CLOUD_Y + y);
 };
 
-var getRandomOpacity = function () {
-  var colorOpacity = Math.random();
-  return colorOpacity;
+var getColumnColor = function (ctx, names) {
+  if (names === 'Вы') {
+    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+  } else {
+    ctx.fillStyle = 'rgba(43, 92, 252, ' + Math.random() + ')';
+  }
 };
 
-var renderHistogram = function (ctx, names, times, x, y, columnGap, columnWidth, cloudHeight, histogramHeight) {
+
+var renderHistogram = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
-    var columnHeight;
-    var columnX;
-    var columnY;
-    for (i = 0; i < names.length; i++) {
-      columnX = x + HORIZONTAL_POSITION + (columnGap + columnWidth) * i;
-      columnY = y + cloudHeight - VERTICAL_POSITION;
-      columnHeight = (Math.round(times[i]) * histogramHeight) / getMaxElement(times);
-      if (names[i] === 'Вы') {
-        ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-      } else {
-        ctx.fillStyle = 'rgba(43, 92, 252, ' + getRandomOpacity() + ')';
-      }
-      ctx.fillRect(columnX, columnY, columnWidth, -columnHeight);
-      ctx.fillStyle = '#000';
-      ctx.fillText(names[i], columnX, columnY + NAME_VERTICAL);
-      ctx.fillText(Math.round(times[i]), columnX, columnY - columnHeight - RESULTS_VERTICAL);
-    }
+    var columnX = CLOUD_X + HORIZONTAL_POSITION + (COLUMN_GAP + COLUMN_WIDTH) * i;
+    var columnY = CLOUD_y + CLOUD_HEIGHT - VERTICAL_POSITION;
+    var columnHeight = (Math.round(times[i]) * HISTOGRAM_HEIGHT) / getMaxElement(times);
+    ctx.fillStyle = getColumnColor(ctx, names[i]);
+    ctx.fillRect(columnX, columnY, COLUMN_WIDTH, -columnHeight);
+    ctx.fillStyle = '#000';
+    ctx.fillText(names[i], columnX, columnY + NAME_VERTICAL);
+    ctx.fillText(Math.round(times[i]), columnX, columnY - columnHeight - RESULTS_VERTICAL);
   }
 };
 
@@ -75,5 +70,5 @@ window.renderStatistics = function (ctx, names, times) {
   writeMessage(ctx, TEXT_1, '#000', '16px PT Mono', 60, 30);
   writeMessage(ctx, TEXT_2, '#000', '16px PT Mono', 60, 50);
   // paint histogram
-  renderHistogram(ctx, names, times, CLOUD_X, CLOUD_Y, COLUMN_GAP, COLUMN_WIDTH, CLOUD_HEIGHT, HISTOGRAM_HEIGHT);
+  renderHistogram(ctx, names, times);
 };
