@@ -22,8 +22,14 @@ var setupWindowIcon = setupWindowOpen.querySelector('.setup-open-icon');
 var inputName = setupWindow.querySelector('.setup-user-name');
 var setupWitcher = document.querySelector('.setup-wizard');
 var setupWitcherEyes = setupWitcher.querySelector('.wizard-eyes');
-
-
+var styleWitcherEyes = '.wizard-eyes';
+var valueWicherEyes = document.querySelector(['[name="eyes-color"]']);
+var setupWitcherCoat = setupWitcher.querySelector('.wizard-coat');
+var styleWitcherCoat = '.wizard-coat';
+var valueWitcherCoat = document.querySelector(['[name="coat-color"]']);
+var setupWitcherBall = document.querySelector('.setup-fireball-wrap');
+var styleWitcherBall = '.setup-fireball-wrap';
+var valueWitcherBall = document.querySelector(['[name="fireball-color"]']);
 
 // Пишем рандомизатор
 var getRandomElement = function (arrayName) {
@@ -48,31 +54,30 @@ var createWitcher = function (witcherData) {
   return fragment.appendChild(withchersInfo);
 };
 
-// Создаем и добовляем волшебников
-var addWitchers = function () {
-
-  for (var i = 0; i < NUMBER_OF_WITCHERS; i++) {
-    var witcherElements = randomWitcher();
-    var witcherDom = createWitcher(witcherElements);
-    withchersList.appendChild(witcherDom);
-  }
-  document.querySelector('.setup-similar').classList.remove('hidden');
-};
-
-addWitchers();
-
-
-// 1 add tabindex="0" – to make setup-open active
-// 2 create remove and add hidden function
-// 3 create eventlistener which listens click on setup open
-// 4
-
+// Блок с фунциями и event handlers экрана настройки
 var addHidden = function (name) {
   name.classList.add('hidden');
 };
 
 var removeHidden = function (name) {
   name.classList.remove('hidden');
+};
+
+var removeListeners = function (element) {
+  document.removeEventListener('keydown', element);
+  document.removeEventListener('click', element);
+};
+
+var changeFillColor = function (element, style, data) {
+  var fillColor = document.querySelector(element).style.fill = getRandomElement(style);
+  data.value = fillColor;
+  removeListeners(element);
+};
+
+var changeBackgroundColor = function (element, style, data) {
+  var fillBackground = document.querySelector(element).style.background = getRandomElement(style);
+  data.value = fillBackground;
+  removeListeners(element);
 };
 
 setupWindowOpen.addEventListener('click', function () {
@@ -95,16 +100,27 @@ setupWindowIcon.addEventListener('keydown', function (evt) {
   }
 });
 
-// setupWindowOpen.addEventListener('keydown', function () {
-//   addHidden(setupWindow);
-// });
+setupWitcherEyes.addEventListener('click', function () {
+  changeFillColor(styleWitcherEyes, EYE_COLORS, valueWicherEyes);
+});
 
-// var setupOpenHandler = function (evt) {
-//   if (evt.keyCode === ESC_KEY) {
-//     addHidden(setupWindow);
-//   }
-// };
+setupWitcherCoat.addEventListener('click', function () {
+  changeFillColor(styleWitcherCoat, COAT_COLORS, valueWitcherCoat);
+});
 
-// setupOpenHandler.addEventListener('keydown', function (evt) {
-//   setupOpenHandler(evt);
-// });
+setupWitcherBall.addEventListener('click', function () {
+  changeBackgroundColor(styleWitcherBall, FIREBALL_COLORS, valueWitcherBall);
+});
+
+// Создаем и добовляем волшебников
+var addWitchers = function () {
+
+  for (var i = 0; i < NUMBER_OF_WITCHERS; i++) {
+    var witcherElements = randomWitcher();
+    var witcherDom = createWitcher(witcherElements);
+    withchersList.appendChild(witcherDom);
+  }
+  document.querySelector('.setup-similar').classList.remove('hidden');
+};
+addWitchers();
+
