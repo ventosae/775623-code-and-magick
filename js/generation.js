@@ -22,12 +22,14 @@
     return fragment.appendChild(withchersInfo);
   };
 
-  (function () {
+  var renderWitchers = function () {
     for (var i = 0; i < window.data.NUMBER_OF_WITCHERS; i++) {
       var witcherElements = randomWitcher();
       var witcherDom = createWitcher(witcherElements);
       withchersList.appendChild(witcherDom);
     }
     document.querySelector('.setup-similar').classList.remove('hidden');
-  }());
+  };
+
+  renderWitchers();
 })();

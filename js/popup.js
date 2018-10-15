@@ -52,7 +52,7 @@
   });
 
   setupWindowOpen.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.data.ESC_KEY && !(evt.target === inputName)) {
+    if (evt.keyCode === window.data.ESC_KEY && evt.target !== inputName) {
       addHidden(setupWindow);
     }
   });
