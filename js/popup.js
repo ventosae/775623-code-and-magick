@@ -16,6 +16,7 @@
   var setupWitcherBall = document.querySelector('.setup-fireball-wrap');
   var styleWitcherBall = '.setup-fireball-wrap';
   var valueWitcherBall = document.querySelector(['[name="fireball-color"]']);
+  var setupWizardForm = document.querySelector('.setup-wizard-form');
 
   var addHidden = function (name) {
     name.classList.add('hidden');
@@ -25,21 +26,19 @@
     name.classList.remove('hidden');
   };
 
-  var removeListeners = function (element) {
-    document.removeEventListener('keydown', element);
-    document.removeEventListener('click', element);
-  };
+  // var removeListeners = function (element) {
+  //   document.removeEventListener('keydown', element);
+  //   document.removeEventListener('click', element);
+  // };
 
   var changeFillColor = function (element, style, data) {
     var fillColor = document.querySelector(element).style.fill = window.utilities.getRandomElement(style);
     data.value = fillColor;
-    removeListeners(element);
   };
 
   var changeBackgroundColor = function (element, style, data) {
     var fillBackground = document.querySelector(element).style.background = window.utilities.getRandomElement(style);
     data.value = fillBackground;
-    removeListeners(element);
   };
 
   setupWindowOpen.addEventListener('click', function () {
@@ -74,4 +73,14 @@
   setupWitcherBall.addEventListener('click', function () {
     changeBackgroundColor(styleWitcherBall, window.data.COAT_COLORS, valueWitcherBall);
   });
+
+  // функция-обработчик отправки формы
+  var formSubmit = function (evt) {
+    evt.preventDefault();
+    window.backend.save(addHidden.bind(null, setupWindow), window.backend.onErrorResponse, new FormData(setupWizardForm));
+  };
+
+  // обработчик отправки данных формы
+  setupWizardForm.addEventListener('submit', formSubmit);
+
 })();

@@ -9,7 +9,7 @@
   //   var witcher = {};
   //   witcher.name = window.utilities.getRandomElement(window.data.NAMES) + ' ' + window.utilities.getRandomElement(window.data.SURNAMES);
   //   witcher.coatColors = window.utilities.getRandomElement(window.data.COAT_COLORS);
-  //   witcher.eyesColors = window.utilities.getRandomElement(window.data.EYE_COLORS);
+  //   witcher.eyegitsColors = window.utilities.getRandomElement(window.data.EYE_COLORS);
   //   return witcher;
   // };
 
@@ -31,5 +31,5 @@
     document.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  window.backend.load(renderWitchers, window.backend.onErrory);
+  window.backend.load(renderWitchers, window.backend.onErrorResponse);
 })();
